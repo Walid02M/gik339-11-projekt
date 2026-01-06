@@ -13,8 +13,6 @@ const getTodos = (req, res) => {
 const addTodo = (req, res) => {
   const text = req.body?.text;
 
-
-  // enkel koll så text finns
   if (!text) {
     return res.status(400).json({ message: "Du måste skicka med text" });
   }
@@ -26,7 +24,29 @@ const addTodo = (req, res) => {
   };
 
   todos.push(newTodo);
-  res.status(201).json(newTodo); // 201 = skapad
+  res.status(201).json(newTodo);
 };
 
-module.exports = { getTodos, addTodo };
+// PUT: uppdaterar en todo
+const updateTodo = (req, res) => {
+  const id = Number(req.params.id);
+  const { text, done } = req.body;
+
+  const todo = todos.find((t) => t.id === id);
+
+  if (!todo) {
+    return res.status(404).json({ message: "Todo hittades inte" });
+  }
+
+  if (text !== undefined) {
+    todo.text = text;
+  }
+
+  if (done !== undefined) {
+    todo.done = done;
+  }
+
+  res.json(todo);
+};
+
+module.exports = { getTodos, addTodo, updateTodo };
