@@ -49,4 +49,21 @@ const updateTodo = (req, res) => {
   res.json(todo);
 };
 
-module.exports = { getTodos, addTodo, updateTodo };
+// DELETE: tar bort en todo
+const deleteTodo = (req, res) => {
+  const id = Number(req.params.id);
+
+  const index = todos.findIndex((t) => t.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Todo hittades inte" });
+  }
+
+  // tar bort 1 todo på platsen index
+  const removed = todos.splice(index, 1);
+
+  res.json({ message: "Todo borttagen", removed: removed[0] });
+};
+
+
+module.exports = { getTodos, addTodo, updateTodo, deleteTodo };
