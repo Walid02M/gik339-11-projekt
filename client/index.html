@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HealthMatter</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="bg-hm" data-theme="dark">
+  <!-- Topbar -->
+  <div class="hm-topbar text-white">
+    <div class="container py-2 d-flex justify-content-between align-items-center">
+      <div class="small opacity-75">Fri frakt över 499 kr • Snabb leverans</div>
+
+      <div class="d-flex align-items-center gap-3">
+        <!-- Theme toggle -->
+        <div class="form-check form-switch m-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="themeToggle">
+          <label class="form-check-label small opacity-75" for="themeToggle">Dark mode</label>
+        </div>
+
+        <!-- Profile -->
+        <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#authModal">
+          <span id="userPillLabel">Profil</span>
+        </button>
+
+        <!-- Cart -->
+        <button id="cartBtn"
+                class="btn btn-sm btn-outline-light position-relative"
+                type="button"
+                aria-label="Varukorg"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#cartCanvas">
+          <i class="bi bi-cart2"></i>
+          <span id="cartCount"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-warning d-none">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark hm-nav sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold letterspace" href="#">HealthMatter</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="nav" class="collapse navbar-collapse">
+        <div class="d-flex gap-2 align-items-center ms-auto">
+          <div class="input-group input-group-sm hm-search">
+            <span class="input-group-text bg-dark text-white border-0">Sök</span>
+            <input id="searchInput" class="form-control border-0" placeholder="Sök bland produkter" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hm-hero text-white">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-7">
+          <h1 class="display-5 fw-bold mb-3">Fuel your health and performance</h1>
+          <p class="lead opacity-75 mb-4">
+            Kosttillskott, protein och energidryck – bygg din stack och lev bättre.
+          </p>
+          <div class="text-muted small mt-3">
+            * Admin får skapa/uppdatera/ta bort produkter efter inloggning.
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="hm-hero-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="fw-semibold">Veckans tips</div>
+              <span class="badge text-bg-light">Top picks</span>
+            </div>
+            <ul class="mb-0 small opacity-75">
+              <li>Whey protein – bra bas</li>
+              <li>Kreatin – styrka & power</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories -->
+  <section id="categories" class="container my-4">
+    <div class="d-flex justify-content-between align-items-end mb-3">
+      <div>
+        <h2 class="h4 mb-1">Kategorier</h2>
+        <div class="text-muted">Filtrera snabbt</div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-6 col-lg-3">
+        <button class="hm-cat card w-100 text-start" data-category="Energidryck" type="button">
+          <div class="card-body">
+            <div class="fw-semibold">Energidryck</div>
+            <div class="text-muted small">Boost & fokus</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <button class="hm-cat card w-100 text-start" data-category="Kosttillskott" type="button">
+          <div class="card-body">
+            <div class="fw-semibold">Kosttillskott</div>
+            <div class="text-muted small">Vitaminer, omega, mm</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <button class="hm-cat card w-100 text-start" data-category="Proteinpulver" type="button">
+          <div class="card-body">
+            <div class="fw-semibold">Proteinpulver</div>
+            <div class="text-muted small">Whey, casein, vegan</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <button class="hm-cat card w-100 text-start" data-category="Alla" type="button">
+          <div class="card-body">
+            <div class="fw-semibold">Alla produkter</div>
+            <div class="text-muted small">Visa allt</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section id="shop" class="container my-4">
+    <div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-2">
+      <div>
+        <h2 class="h4 mb-1">Shop</h2>
+        <div class="text-muted">Produkter laddas dynamiskt från ditt API</div>
+      </div>
+
+      <div class="d-flex gap-2 align-items-center">
+        <select id="sortSelect" class="form-select form-select-sm hm-sort">
+          <option value="popular">Sortera: Populärt</option>
+          <option value="priceAsc">Pris: Lågt → Högt</option>
+          <option value="priceDesc">Pris: Högt → Lågt</option>
+          <option value="stockDesc">Lager: Mest</option>
+        </select>
+
+        <button id="refreshBtn" class="btn btn-sm btn-outline-secondary" type="button">Uppdatera</button>
+
+        <button id="adminAddBtn" class="btn btn-sm btn-hm-primary d-none" type="button">
+          + Lägg till produkt
+        </button>
+      </div>
+    </div>
+    
+    <div id="listMount"></div>
+
+    <!-- Admin panel -->
+    <div id="adminPanel" class="card shadow-sm mt-4 d-none">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <h3 class="h6 mb-0">Admin: Skapa / Uppdatera produkt</h3>
+          <button id="adminCloseBtn" class="btn btn-sm btn-outline-secondary" type="button">Stäng</button>
+        </div>
+ 
+        <form id="productForm" class="mt-3">
+          <input type="hidden" id="editingId" value="">
+
+          <div class="row g-2">
+            <div class="col-12">
+              <label class="form-label">Namn</label>
+              <input id="name" class="form-control" required>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Kategori</label>
+              <select id="category" class="form-select" required>
+                <option value="Energidryck">Energidryck</option>
+                <option value="Kosttillskott">Kosttillskott</option>
+                <option value="Proteinpulver">Proteinpulver</option>
+                <option value="Övrigt">Övrigt</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Pris (SEK)</label>
+              <input id="price" type="number" class="form-control" min="0" step="0.01" required>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Bild-URL</label>
+              <input id="imageUrl" class="form-control" placeholder="https://...">
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Lager</label>
+              <input id="stock" type="number" class="form-control" min="0" step="1" required>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Taggfärg (design)</label>
+              <input id="tagColor" type="color" class="form-control form-control-color" value="#ff3d6a">
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-3">
+            <button id="submitBtn" type="submit" class="btn btn-hm-primary flex-grow-1">Spara</button>
+            <button id="clearBtn" type="button" class="btn btn-outline-secondary">Rensa</button>
+          </div>
+
+          <div class="text-muted small mt-2">
+            Klicka “Ändra” på en produkt för att fylla formuläret.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTH MODAL -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content hm-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Logga in</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Stäng"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="text-muted small mb-3">
+            Välj roll. Admin får CRUD-funktioner, kund kan bara se och söka.
+          </div>
+
+          <div class="d-grid gap-2">
+            <button id="loginCustomerBtn" class="btn btn-outline-primary" type="button">Logga in som Kund</button>
+            <button id="loginAdminBtn" class="btn btn-hm-primary" type="button">Logga in som Admin</button>
+            <button id="logoutBtn" class="btn btn-outline-secondary d-none" type="button">Logga ut</button>
+          </div>
+
+          <div class="text-muted small mt-3">
+            Status: <span id="roleLabel" class="fw-semibold">Gäst</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART OFFCANVAS -->
+  <div class="offcanvas offcanvas-end hm-offcanvas" tabindex="-1" id="cartCanvas" aria-labelledby="cartCanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="cartCanvasLabel">Varukorg</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Stäng"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <div id="cartItems"></div>
+
+      <div class="border-top pt-3 mt-3 d-flex justify-content-between align-items-center">
+        <div class="fw-semibold">Totalt</div>
+        <div id="cartTotal" class="fw-bold">0 kr</div>
+      </div>
+
+      <button id="clearCartBtn" class="btn btn-outline-danger w-100 mt-3" type="button">
+        Töm varukorg
+      </button>
+    </div>
+  </div>
+
+  <!-- FEEDBACK MODAL -->
+  <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content hm-modal">
+        <div class="modal-header">
+          <h5 class="modal-title" id="messageTitle">Meddelande</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Stäng"></button>
+        </div>
+        <div class="modal-body" id="messageBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-hm-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="hm-footer text-white mt-5">
+    <div class="container py-4 d-flex flex-wrap justify-content-between gap-2">
+      <div class="opacity-75 small">© HealthMatter</div>
+      <div class="opacity-75 small">Frakt • Retur • Villkor</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

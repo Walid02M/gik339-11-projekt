@@ -1,0 +1,184 @@
+:root{
+  --hm-accent: #ff3d6a;
+}
+
+/* Theme tokens */
+body[data-theme="dark"]{
+  --hm-bg: #0b0f14;
+  --hm-surface: #111827;
+  --hm-soft: rgba(255,255,255,0.10);
+  --hm-text: rgba(255,255,255,0.92);
+  --hm-muted: rgba(255,255,255,0.65);
+  --hm-border: rgba(255,255,255,0.10);
+  --hm-input: rgba(255,255,255,0.10);
+
+  /* FIX: dark background must be solid, not transparent */
+  background: var(--hm-bg);
+  color: var(--hm-text);
+}
+
+body[data-theme="light"]{
+  --hm-bg: #f6f7fb;
+  --hm-surface: #ffffff;
+  --hm-soft: rgba(0,0,0,0.05);
+  --hm-text: rgba(0,0,0,0.90);
+  --hm-muted: rgba(0,0,0,0.60);
+  --hm-border: rgba(0,0,0,0.12);
+  --hm-input: rgba(0,0,0,0.04);
+
+  background: var(--hm-bg);
+  color: var(--hm-text);
+}
+
+/* Basics */
+html, body { height: 100%; }
+.bg-hm { background: transparent; } /* ok to keep */
+.letterspace { letter-spacing: 0.5px; }
+
+/* General text helpers */
+.text-muted { color: var(--hm-muted) !important; }
+
+/* Topbar + Nav */
+.hm-topbar { background: #070a0f; }
+body[data-theme="light"] .hm-topbar { background: #111827; } /* keep dark topbar */
+
+.hm-nav { background: #0b0f14; border-bottom: 1px solid rgba(255,255,255,0.10); }
+body[data-theme="light"] .hm-nav { background: #111827; border-bottom: 1px solid rgba(255,255,255,0.10); }
+
+/* Hero */
+.hm-hero{
+  background:
+    radial-gradient(900px 500px at 10% 20%, rgba(255,61,106,0.25), transparent 60%),
+    radial-gradient(700px 400px at 80% 30%, rgba(59,130,246,0.25), transparent 60%),
+    linear-gradient(180deg, var(--hm-bg) 0%, var(--hm-bg) 65%, var(--hm-bg) 100%);
+}
+
+.hm-pill{
+  display: inline-block;
+  padding: .35rem .6rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  font-size: .8rem;
+  letter-spacing: .5px;
+}
+body[data-theme="light"] .hm-pill{ background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.8); }
+
+.hm-hero-card{
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 1rem;
+}
+body[data-theme="light"] .hm-hero-card{
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Buttons */
+.btn-hm-primary{
+  background: var(--hm-accent);
+  border-color: var(--hm-accent);
+  color: white;
+  font-weight: 700;
+}
+.btn-hm-primary:hover{ filter: brightness(0.95); color: white; }
+
+/* Search input */
+.hm-search .form-control { background: rgba(255,255,255,0.10); color: white; }
+.hm-search .form-control::placeholder { color: rgba(255,255,255,0.6); }
+.hm-search .form-control:focus { box-shadow: none; }
+body[data-theme="light"] .hm-search .form-control{
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
+body[data-theme="light"] .hm-search .form-control::placeholder{ color: rgba(255,255,255,0.65); }
+
+/* Category cards */
+.hm-cat{
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.hm-cat:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+}
+
+.hm-sort{ width: 190px; }
+
+/* ----------------------------
+   IMPORTANT: Theme Bootstrap components (whole page)
+---------------------------- */
+
+/* Cards everywhere (categories/products/admin) */
+.card{
+  background: var(--hm-surface);
+  color: var(--hm-text);
+  border: 1px solid var(--hm-border);
+}
+.card .text-muted{ color: var(--hm-muted) !important; }
+
+/* Inputs/selects */
+.form-control, .form-select{
+  background: var(--hm-input);
+  border: 1px solid var(--hm-border);
+  color: var(--hm-text);
+}
+.form-control::placeholder{
+  color: var(--hm-muted);
+}
+.form-control:focus, .form-select:focus{
+  background: var(--hm-input);
+  border-color: rgba(255,61,106,0.55);
+  box-shadow: 0 0 0 .2rem rgba(255,61,106,0.18);
+  color: var(--hm-text);
+}
+
+/* In light mode, inputs should be white */
+body[data-theme="light"] .form-control,
+body[data-theme="light"] .form-select{
+  background: #ffffff;
+  color: var(--hm-text);
+}
+
+/* Product card */
+.hm-product{
+  border-left-width: 10px;
+  border-left-style: solid;
+}
+.hm-product__img{
+  width: 100%;
+  height: 220px;            /* samma höjd på alla */
+  object-fit: contain;      /* ingen konstig crop */
+  object-position: center;  /* centrerad */
+  background: #fff;         /* REN vit, inga konstiga toner */
+  border-radius: .75rem;
+  padding: 14px;            /* luft så bilden sitter snyggt */
+  display: block;
+}
+
+/* Modal theming (auth + feedback) */
+.modal-content,
+.hm-modal{
+  background: var(--hm-surface);
+  color: var(--hm-text);
+  border: 1px solid var(--hm-border);
+}
+body[data-theme="dark"] .btn-close{
+  filter: invert(1) grayscale(100%);
+}
+body[data-theme="light"] .btn-close{
+  filter: none;
+}
+
+/* Offcanvas (cart) */
+.hm-offcanvas,
+.offcanvas{
+  background: var(--hm-surface);
+  color: var(--hm-text);
+  border-left: 1px solid var(--hm-border);
+}
+.offcanvas-header{
+  border-bottom: 1px solid var(--hm-border);
+}
+
+/* Footer */
+.hm-footer{ background: #070a0f; }

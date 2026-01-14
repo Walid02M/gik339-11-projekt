@@ -1,15 +1,12 @@
-// enkel "fake-databas" i minnet
 let todos = [
   { id: 1, text: "Handla mjölk", done: false },
   { id: 2, text: "Plugga CRUD", done: false },
 ];
 
-// GET: hämtar alla todos
 const getTodos = (req, res) => {
   res.json(todos);
 };
 
-// POST: lägger till en ny todo
 const addTodo = (req, res) => {
   const text = req.body?.text;
 
@@ -27,7 +24,6 @@ const addTodo = (req, res) => {
   res.status(201).json(newTodo);
 };
 
-// PUT: uppdaterar en todo
 const updateTodo = (req, res) => {
   const id = Number(req.params.id);
   const { text, done } = req.body;
@@ -38,18 +34,12 @@ const updateTodo = (req, res) => {
     return res.status(404).json({ message: "Todo hittades inte" });
   }
 
-  if (text !== undefined) {
-    todo.text = text;
-  }
-
-  if (done !== undefined) {
-    todo.done = done;
-  }
+  if (text !== undefined) todo.text = text;
+  if (done !== undefined) todo.done = done;
 
   res.json(todo);
 };
 
-// DELETE: tar bort en todo
 const deleteTodo = (req, res) => {
   const id = Number(req.params.id);
 
@@ -59,11 +49,8 @@ const deleteTodo = (req, res) => {
     return res.status(404).json({ message: "Todo hittades inte" });
   }
 
-  // tar bort 1 todo på platsen index
   const removed = todos.splice(index, 1);
-
   res.json({ message: "Todo borttagen", removed: removed[0] });
 };
-
 
 module.exports = { getTodos, addTodo, updateTodo, deleteTodo };
